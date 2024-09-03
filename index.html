@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="moodleResourceForm.js"></script> <!-- Incluye la librería -->
     <title>Ejemplo de Formulario</title>
     <style>
         body {
@@ -50,57 +51,31 @@
 </head>
 <body>
     <div class="container">
-        <h2>Formulario de Ejemplo</h2>
+        <h2>Formulario de Ejemplo.</h2>
         <p>Envía el ejercicio 1634898912951-SCORM_12.zip de la url https://procomun.intef.es/ode/view/1634898912951 creado con exe al moodle indicado en la url del formulario.</p>
         <form id="myForm">
-            <label for="url">Url moodle:</label>
-            <input type="text" id="url" name="url" placeholder="Ingresa la url de tu moodle" required>
+            <label for="moodleUrl">Url moodle:</label>
+            <input type="text" id="moodleUrl" name="moodleUrl" placeholder="Ingresa la url de tu moodle" required>
+
+            <input type="hidden" id="fileUrl" name="fileUrl" value="https://moodlexabi.github.io/mnet/1634898912951-SCORM_12.zip">
+            <input type="hidden" id="resourceName" name="resourceName" value="El uso de las mayúsculas">
+            <input type="hidden" id="resourceSummary" name="resourceSummary" value="Siguiendo este razonamiento, a lo largo del presente recurso trabajaremos las normas que rigen el uso de las letras mayúsculas a través de diferentes actividades, tanto de desarrollo como de ampliación. La temporalización estimada será de dos sesiones lectivas, en las que explicaremos las reglas ortográficas que nos conciernen, con el propósito de resolver a nuestro alumnado posibles dudas mediante la resolución de distintas tareas, las cuales pueden ser cambiadas o adaptadas según el criterio docente. Finalmente, con respecto a la evaluación, se ha diseñado una rúbrica que se utilizará para facilitar la recogida de datos y la evaluación de los objetivos y competencias adquiridos por los estudiantes, con la que también es posible detectar dificultades y aspectos que mejorar.">
+
             <button type="submit">Enviar</button>
         </form>
     </div>
 
     <script>
-        document.getElementById('myForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Previene el envío por defecto del formulario
+        function enviarRecurso() {
+            const moodleUrl = document.getElementById('moodleUrl').value;
+            const fileUrl = document.getElementById('fileUrl').value;
+            const resourceName = document.getElementById('resourceName').value;
+            const resourceSummary = document.getElementById('resourceSummary').value;
 
-            const urlInput = document.getElementById('url').value;
-            const targetUrl = `${urlInput}admin/tool/moodlenet/import.php`;
-
-            // Crea un nuevo formulario en memoria para hacer el POST
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = targetUrl;
-            form.target = '_blank'; // Esto abre el formulario en una nueva pestaña
-
-            // Puedes agregar aquí campos adicionales si los necesitas
-            // Por ejemplo:
-            const resourceurlInput = document.createElement('input');
-            resourceurlInput.type = 'hidden';
-            resourceurlInput.name = 'resourceurl';
-            resourceurlInput.value = 'https://moodlexabi.github.io/mnet/1634898912951-SCORM_12.zip';
-            form.appendChild(resourceurlInput);
-
-            const resourceinfoInput = document.createElement('input');
-            resourceinfoInput.type = 'hidden';
-            resourceinfoInput.name = 'resource_info';
-            resourceinfoInput.value = JSON.stringify({
-                "canonicalUrl": "https://moodlexabi.github.io/mnet/1634898912951-SCORM_12.zip",
-                "icon": "https://moodlexabi.github.io/mnet/1634898912951.png",
-                "name": "El uso de las mayúsculas",
-                "summary": "Siguiendo este razonamiento, a lo largo del presente recurso trabajaremos las normas que rigen el uso de las letras mayúsculas a través de diferentes actividades, tanto de desarrollo como de ampliación. La temporalización estimada será de dos sesiones lectivas, en las que explicaremos las reglas ortográficas que nos conciernen, con el propósito de resolver a nuestro alumnado posibles dudas mediante la resolución de distintas tareas, las cuales pueden ser cambiadas o adaptadas según el criterio docente. Finalmente, con respecto a la evaluación, se ha diseñado una rúbrica que se utilizará para facilitar la recogida de datos y la evaluación de los objetivos y competencias adquiridos por los estudiantes, con la que también es posible detectar dificultades y aspectos que mejorar.",
-            });
-            form.appendChild(resourceinfoInput);
-
-
-            const type = document.createElement('input');
-            type.type = 'hidden';
-            type.name = 'type';
-            type.value = 'file';
-            form.appendChild(type);
-
-            document.body.appendChild(form); // Agrega el formulario al DOM
-            form.submit(); // Envía el formulario
-        });
+            // Usamos la librería para enviar el formulario
+            MoodleResourceForm.sendForm(moodleUrl, fileUrl, resourceName, resourceSummary);
+        }
     </script>
 </body>
 </html>
+
