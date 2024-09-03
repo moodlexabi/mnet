@@ -51,21 +51,56 @@
 <body>
     <div class="container">
         <h2>Formulario de Ejemplo</h2>
-        <form action="#" method="POST">
-            <label for="name">Nombre:</label>
-            <input type="text" id="name" name="name" placeholder="Ingresa tu nombre" required>
-
-            <label for="email">Correo Electrónico:</label>
-            <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
-
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
-
-            <label for="message">Mensaje:</label>
-            <textarea id="message" name="message" rows="4" placeholder="Escribe tu mensaje aquí"></textarea>
-
+        <form id="myForm">
+            <label for="url">Url moodle:</label>
+            <input type="text" id="url" name="url" placeholder="Ingresa la url de tu moodle" required>
             <button type="submit">Enviar</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene el envío por defecto del formulario
+
+            const urlInput = document.getElementById('url').value;
+            const targetUrl = `${urlInput}admin/tool/moodlenet/import.php`;
+
+            // Crea un nuevo formulario en memoria para hacer el POST
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = targetUrl;
+            form.target = '_blank'; // Esto abre el formulario en una nueva pestaña
+
+            // Puedes agregar aquí campos adicionales si los necesitas
+            // Por ejemplo:
+            const resourceurlInput = document.createElement('input');
+            resourceurlInput.type = 'hidden';
+            resourceurlInput.name = 'resourceurl';
+            resourceurlInput.value = 'https://moodle.net/.pkg/@moodlenet/ed-resource/dl/ed-resource/dqMVvgUW/314_DigCompEdu_2017_20210701_1347_comma_separated.csv';
+            form.appendChild(resourceurlInput);
+
+            const resourceinfoInput = document.createElement('input');
+            resourceinfoInput.type = 'hidden';
+            resourceinfoInput.name = 'resourceinfo';
+            resourceinfoInput.value = JSON.stringify({
+                "canonicalUrl": "https://moodle.net/.pkg/@moodlenet/ed-resource/dl/ed-resource/dqMVvgUW/314_DigCompEdu_2017_20210701_1347_comma_separated.csv",
+                "icon": "https://moodle.net/.pkg/@moodlenet/ed-resource/public/2021/11/07/08/13/58/802_digcomedu.jpg",
+                "licence": "CC-BY",
+                "name": "European Framework for the Digital Competence of Educators",
+                "summary": "Please note that these competencies are copyright of the European Union - however re-use is permitted with attribution according to the official re-use policy."
+            });
+            form.appendChild(resourceinfoInput);
+
+
+            const type = document.createElement('input');
+            resourceurlInput.type = 'hidden';
+            resourceurlInput.name = 'type';
+            resourceurlInput.value = 'file';
+            form.appendChild(resourceurlInput);
+
+            document.body.appendChild(form); // Agrega el formulario al DOM
+            form.submit(); // Envía el formulario
+        });
+    </script>
 </body>
 </html>
