@@ -93,10 +93,10 @@
 
 
             const type = document.createElement('input');
-            resourceurlInput.type = 'hidden';
-            resourceurlInput.name = 'type';
-            resourceurlInput.value = 'file';
-            form.appendChild(resourceurlInput);
+            type.type = 'hidden';
+            type.name = 'type';
+            type.value = 'file';
+            form.appendChild(type);
 
             document.body.appendChild(form); // Agrega el formulario al DOM
             form.submit(); // Envía el formulario
