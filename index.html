@@ -101,11 +101,53 @@
     </div>
 
 
+    <div class="container">
+        <h2>Formulario de Ejemplo con selector</h2>
+        <p>Envía el ejercicio de la url https://procomun.intef.es/ode/view/1624500001532 creado con exe al moodle indicado en la url y con formato elegido en el formulario.</p>
+        <form id="myForm">
+            <label for="moodleUrl">Url moodle:</label>
+            <select id="moodleUrl" name="moodleUrl" onchange="toggleUrlInput(this)">
+                <option value="otr">otro</option>
+                <option value="https://elearning1.test.hezkuntza.net/013447/">https://elearning1.test.hezkuntza.net/013447/</option>
+                <option value="https://gureikastetxea.test-iradi.eus/">https://gureikastetxea.test-iradi.eus/</option>
+            </select>
+            <input type="text" id="moodleUrlText" name="moodleUrlText" placeholder="Ingresa la url de tu moodle" required>
+
+            <label for="fileUrl">Format:</label>
+            <select id="fileUrl" name="fileUrl">
+                <option value="https://ode.educacion.es/export/1624500001532/SCORM_12/1624500001532-SCORM_12.zip">SCORM 1.2</option>
+                <option value="https://ode.educacion.es/export/1624500001532/IMS_CP/1624500001532-IMS_CP.zip">IMSCP</option>
+            </select>
+            
+            <input type="hidden" id="resourceName" name="resourceName" value="El uso de las mayúsculas">
+            <input type="hidden" id="resourceSummary" name="resourceSummary" value="Siguiendo este razonamiento, a lo largo del presente recurso trabajaremos las normas que rigen el uso de las letras mayúsculas a través de diferentes actividades, tanto de desarrollo como de ampliación. La temporalización estimada será de dos sesiones lectivas, en las que explicaremos las reglas ortográficas que nos conciernen, con el propósito de resolver a nuestro alumnado posibles dudas mediante la resolución de distintas tareas, las cuales pueden ser cambiadas o adaptadas según el criterio docente. Finalmente, con respecto a la evaluación, se ha diseñado una rúbrica que se utilizará para facilitar la recogida de datos y la evaluación de los objetivos y competencias adquiridos por los estudiantes, con la que también es posible detectar dificultades y aspectos que mejorar.">
+
+            <button type="button" onclick="enviarRecurso(this)">Enviar Recurso</button>
+        </form>
+    </div>
+
     <script>
+
+        function toggleUrlInput(select) {
+            const urlTextInput = document.getElementById('moodleUrlText');
+            if (select.value === 'otr') {
+                urlTextInput.style.display = 'block';
+                urlTextInput.required = true;
+            } else {
+                urlTextInput.style.display = 'none';
+                urlTextInput.required = false;
+            }
+        }
+
         function enviarRecurso(button) {
             const form = button.closest('form'); // Obtiene el formulario al que pertenece el botón
+            let moodleUrl = form.querySelector('[name="moodleUrl"]').value;
 
-            const moodleUrl = form.querySelector('[name="moodleUrl"]').value;
+            // Si se seleccionó "otro", se usa el valor del campo de texto
+            if (moodleUrl === 'otr') {
+                moodleUrl = form.querySelector('[name="moodleUrlText"]').value;
+            }
+
             const fileUrl = form.querySelector('[name="fileUrl"]').value;
             const resourceName = form.querySelector('[name="resourceName"]').value;
             const resourceSummary = form.querySelector('[name="resourceSummary"]').value;
