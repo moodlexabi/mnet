@@ -2,9 +2,11 @@
     // Definimos nuestra librería como un objeto llamado `MoodleResourceForm`
     const MoodleResourceForm = {};
 
-    // Función para crear y enviar el formulario
+    // Función para crear y enviar es recurso a Moodle, abre una nueva pestaña con e inicia el proceso de importación en moodle
     MoodleResourceForm.sendForm = function(moodleUrl, fileUrl, resourceName, resourceSummary) {
-        const targetUrl = `${moodleUrl}/admin/tool/moodlenet/import.php`;
+
+        const normalizedUrl = moodleUrl.endsWith('/') ? moodleUrl : `${moodleUrl}/`;
+        const targetUrl = `${normalizedUrl}admin/tool/moodlenet/import.php`;
 
         // Crea un nuevo formulario en memoria para hacer el POST
         const form = document.createElement('form');
