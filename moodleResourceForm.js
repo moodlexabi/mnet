@@ -1,8 +1,20 @@
 (function(global) {
-    // Definimos nuestra librería como un objeto llamado `MoodleResourceForm`
+    // Definición de la librería como un objeto llamado `MoodleResourceForm`
     const MoodleResourceForm = {};
 
-    // Función para crear y enviar es recurso a Moodle, abre una nueva pestaña con e inicia el proceso de importación en moodle
+    /*
+    * Función que envía un formulario a Moodle para importar un recurso
+    * @param {string} moodleUrl - URL de la instancia de Moodle
+    * @param {string} fileUrl - URL del archivo a importar
+    * @param {string} resourceName - Nombre del recurso
+    *   
+    * @return {void}
+    *   
+    * @example
+    *   
+    *  MoodleResourceForm.sendForm('https://moodle.example.com', 'https://example.com/file.pdf', 'Archivo de ejemplo', 'Este es un archivo de ejemplo');
+    *   
+    */
     MoodleResourceForm.sendForm = function(moodleUrl, fileUrl, resourceName, resourceSummary) {
 
         const normalizedUrl = moodleUrl.endsWith('/') ? moodleUrl : `${moodleUrl}/`;
