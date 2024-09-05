@@ -7,6 +7,7 @@
     * @param {string} moodleUrl - URL de la instancia de Moodle
     * @param {string} fileUrl - URL del archivo a importar
     * @param {string} resourceName - Nombre del recurso
+    * @param {string} resourceSummary - Resumen del recurso
     *   
     * @return {void}
     *   
@@ -24,7 +25,7 @@
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = targetUrl;
-        form.target = '_blank'; // Esto abre el formulario en una nueva pestaña
+        form.target = '_blank'; // Abre el formulario en una nueva pestaña
 
         // Agregamos los campos ocultos al formulario
         const resourceurlInput = document.createElement('input');
@@ -38,7 +39,7 @@
         resourceinfoInput.name = 'resource_info';
         resourceinfoInput.value = JSON.stringify({
             "canonicalUrl": fileUrl,
-            "icon": "", // Puedes añadir un icono si es necesario
+            "icon": "",
             "name": resourceName,
             "summary": resourceSummary,
         });
